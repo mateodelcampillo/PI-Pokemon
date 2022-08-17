@@ -1,15 +1,25 @@
 const axios = require("axios")
 const { Router } = require("express");
 // const Type = require("../models/Type");
-const {Pokemon, Type} = require("../db")
+const { Pokemon, Type } = require("../db")
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const router = Router()
 
 
 router.get("/", async (req, res) => {
-   
-    if(req.query.name){
+    const dbPokemons = await Pokemon.findAll({
+        include: [{ model: Type, attributes: ["name"], through: { attributes: [] } }]
+    })
+    console.log("ERRORRRRRRRRRR",dbPokemons)
+    if (req.query.name) {
+        const searchDb = await Pokemon.findAll({
+            where: {
+                name: req.query.name
+            }
+        })
+        console.log(searchDb)
         try {
+
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${req.query.name}`)
                 .then(d => d.json())
                 .then(p => {
@@ -26,13 +36,29 @@ router.get("/", async (req, res) => {
                         speed: p.stats[5].base_stat
                     }
                 })
+            if (searchDb.length > 0) {
+                try {
+                    res.send(searchDb)
+                } catch (e) {
+                    res.status(404).send(e)
+
+                }
+            } else
                 res.send(response)
         } catch (error) {
             console.log("No existe")
             res.status(404).send("No existe")
         }
     }
-    else
+    // else if
+    // (dbPokemons.length > 0 ){
+    //     try {
+    //         res.json([...response, ...dbPokemons])
+    //     } catch (e) {
+    //         res.send(e)
+    //     }
+    // }
+    // else
     try {
 
         const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=40")
@@ -53,14 +79,21 @@ router.get("/", async (req, res) => {
                 speed: p.stats[5].base_stat
             }
         })
-        
-        res.json(pokemons)
+        if (dbPokemons.length > 0) {
+            try {
+                res.json([...dbPokemons, ...pokemons])
+            } catch (e) {
+                res.send(e)
+            }
+        } else
+            res.json(pokemons)
     } catch (error) {
         res.send(console.log(error))
     }
 })
 
 router.get("/:id", async (req, res) => {
+
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${req.params.id}`)
             .then(d => d.json())
@@ -78,7 +111,8 @@ router.get("/:id", async (req, res) => {
                     speed: p.stats[5].base_stat
                 }
             })
-            res.send(response)
+
+        res.send(response)
     } catch (error) {
         console.log(error)
         res.status(404).send(error)
@@ -86,11 +120,11 @@ router.get("/:id", async (req, res) => {
 })
 
 
-router.post("/", async(req,res) => {
-    try{
-        if(req.body.name !== "" && req.body.types !== "" && req.body.height !== ""){
+router.post("/", async (req, res) => {
+    try {
+        if (req.body.name !== "" && req.body.types !== "" && req.body.height !== "") {
             let types = await Type.findAll({
-                where:{
+                where: {
                     name: req.body.types
                 }
             })
@@ -101,7 +135,7 @@ router.post("/", async(req,res) => {
             res.send(test)
         }
     }
-    catch(e){
+    catch (e) {
         res.status(404).send(`El error ${e}`)
     }
 })

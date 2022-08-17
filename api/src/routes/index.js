@@ -13,6 +13,6 @@ const type = require("./type")
 // Ejemplo: router.use('/auth', authRouter);
 router.use(express.json())
 router.use("/pokemons", pokemons)
-router.use("/type", type)
+router.use("/types", type)
 
 module.exports = router;

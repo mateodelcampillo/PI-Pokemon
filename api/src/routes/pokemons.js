@@ -1,5 +1,6 @@
 const axios = require("axios")
 const { Router } = require("express");
+const { Op } = require("sequelize")
 // const Type = require("../models/Type");
 const { Pokemon, Type } = require("../db")
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
@@ -10,16 +11,25 @@ router.get("/", async (req, res) => {
     const dbPokemons = await Pokemon.findAll({
         include: [{ model: Type, attributes: ["name"], through: { attributes: [] } }]
     })
-    console.log("ERRORRRRRRRRRR",dbPokemons)
+    
     if (req.query.name) {
         const searchDb = await Pokemon.findAll({
             where: {
-                name: req.query.name
+                name: { [Op.iLike]: `%${req.query.name}%` }
+            },
+            include: {
+                model: Type,
+                attributes: ["name"],
+                through: { attributes: [] }
             }
         })
-        console.log(searchDb)
+        console.log("ESTO ->",req.query.name)
         try {
-
+        if (searchDb.length > 0 && req.query.name !== "") {
+               
+                    res.send(...searchDb)
+               
+            }else{
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${req.query.name}`)
                 .then(d => d.json())
                 .then(p => {
@@ -36,20 +46,13 @@ router.get("/", async (req, res) => {
                         speed: p.stats[5].base_stat
                     }
                 })
-            if (searchDb.length > 0) {
-                try {
-                    res.send(searchDb)
-                } catch (e) {
-                    res.status(404).send(e)
-
-                }
-            } else
+            
                 res.send(response)
-        } catch (error) {
-            console.log("No existe")
+        }} catch (error) {
+            console.log(error)
             res.status(404).send("No existe")
         }
-    }
+    } else
     // else if
     // (dbPokemons.length > 0 ){
     //     try {
@@ -88,7 +91,7 @@ router.get("/", async (req, res) => {
         } else
             res.json(pokemons)
     } catch (error) {
-        res.send(console.log(error))
+        res.send(error)
     }
 })
 
@@ -114,7 +117,7 @@ router.get("/:id", async (req, res) => {
 
         res.send(response)
     } catch (error) {
-        console.log(error)
+       
         res.status(404).send(error)
     }
 })

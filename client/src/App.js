@@ -1,10 +1,25 @@
 import './App.css';
+import { Route } from "react-router-dom";
+import Home from './components/Home/Home';
+import Landing from './components/Landing/Landing';
+import PokemonDetail from './components/PokemonDetail/PokemonDetail';
+import CreatePokemon from './components/CreatePokemon/CreatePokemon';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getAllPokemons } from './redux/actions';
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllPokemons())
+  },[])
   return (
-    <div className="App">
-      <h1>Henry Pokemon</h1>
-    </div>
+    <>
+    <Route exact path="/" component={Landing}/>
+    <Route exact path="/home" component={Home}/>
+    <Route exact path="/pokemon/:id" component={PokemonDetail}/>
+    <Route exact path="/pokemon/create" component={CreatePokemon}/>
+    </>
   );
 }
 

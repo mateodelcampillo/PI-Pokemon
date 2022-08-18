@@ -4,7 +4,7 @@ import Home from './components/Home/Home';
 import Landing from './components/Landing/Landing';
 import PokemonDetail from './components/PokemonDetail/PokemonDetail';
 import CreatePokemon from './components/CreatePokemon/CreatePokemon';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getAllPokemons } from './redux/actions';
 

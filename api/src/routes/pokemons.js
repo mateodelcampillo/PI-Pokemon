@@ -96,8 +96,29 @@ router.get("/", async (req, res) => {
 })
 
 router.get("/:id", async (req, res) => {
-
+    let str = req.params.id.toString()
+    if(str.length > 9)
+    {const idDB = await Pokemon.findOne({
+            where:{
+                id_Pokemon: req.params.id
+            },
+            include: {
+                model: Type,
+                attributes: ["name"],
+                through: { attributes: [] }
+            }
+        })
     try {
+        
+        
+            res.send(idDB)
+        }
+        catch(e){
+            res.send(e)
+        }}
+        else
+       { 
+        try{
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${req.params.id}`)
             .then(d => d.json())
             .then(p => {
@@ -117,10 +138,10 @@ router.get("/:id", async (req, res) => {
 
         res.send(response)
     } catch (error) {
-       
+       console.log("EL ERROR -> ", error)
         res.status(404).send(error)
     }
-})
+}})
 
 
 router.post("/", async (req, res) => {

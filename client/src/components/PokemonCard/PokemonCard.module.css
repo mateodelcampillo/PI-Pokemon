@@ -1,0 +1,9 @@
+.img{
+    width: 300px;
+}
+.divContainer{
+    display: flex;
+    align-items: center;
+    margin: 100px;
+    border: solid 4px black;
+}

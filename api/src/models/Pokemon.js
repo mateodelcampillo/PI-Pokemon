@@ -40,6 +40,10 @@ module.exports = (sequelize) => {
     speed: {
       type: DataTypes.INTEGER,
       allowNull:false
+    },
+    health:{
+      type: DataTypes.INTEGER,
+      allowNull:false
     }
   });
 };

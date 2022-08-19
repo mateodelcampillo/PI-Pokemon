@@ -21,7 +21,7 @@ router.get("/",  async(req,res) => {
         res.send(error)
     }}
     else{
-        res.send("Ya esta creada")
+    res.send(yet)
     }
 })
 

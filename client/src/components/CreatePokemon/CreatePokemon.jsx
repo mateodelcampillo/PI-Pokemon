@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from 'react-router-dom'
-import { createPokemon } from '../../redux/actions'
+import { createPokemon, getAllPokemons, getCreatedPokemons } from '../../redux/actions'
 
 function CreatePokemon() {
   const dispatch = useDispatch()
@@ -43,6 +43,11 @@ function CreatePokemon() {
   }
   return (
     <div>CreatePokemon
+      <a onClick={(e)=>{
+        e.preventDefault()
+        dispatch(getAllPokemons())
+        dispatch(getCreatedPokemons())
+      }}><Link to="/home">Home</Link></a>
     <form onSubmit={handleOnSubmit}>
       <label>Name:</label>
       <input onChange={handleOnChange} name="name" type="text" />

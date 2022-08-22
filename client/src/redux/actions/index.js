@@ -64,7 +64,32 @@ export const getSearchPokemon = (name) =>{
 }
 
 export const createPokemon = (pokemon) => {
-    return function(dispatch){
+    return async function(dispatch){
+        if(pokemon.image === ""){
+            try{
+                fetch(`http://localhost:3001/pokemons`,{
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    method: "post",
+                    body: JSON.stringify({
+                    name: pokemon.name,
+                    height: pokemon.height,
+                    weight: pokemon.weight,
+                    attack: pokemon.attack,
+                    defense: pokemon.defense,
+                    speed: pokemon.speed,
+                    health: pokemon.health,
+                    types: [...pokemon.types]
+                    })
+                })
+              
+            
+            }
+            catch(e){
+                alert(e)
+            }
+        }else
         try{
             fetch(`http://localhost:3001/pokemons`,{
                 headers: {
@@ -73,7 +98,26 @@ export const createPokemon = (pokemon) => {
                 method: "post",
                 body: JSON.stringify(pokemon)
             })
-            dispatch({type: CREATE_POKEMON, payload: pokemon})
+           
+            
+            alert("POKEMON CREATED SUCCESFULLY")
+            
+        }
+        catch(e){
+            alert(e)
+        }
+    }
+}
+
+export const getCreatedPokemons = () => {
+    return async function(dispatch){
+        try {
+            const response = await axios.get(`http://localhost:3001/created`)
+            if(response?.data){
+                dispatch({type: CREATE_POKEMON, payload: response.data})
+            }
+            
+            
         }
         catch(e){
             alert(e)

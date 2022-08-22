@@ -14,5 +14,22 @@ const type = require("./type")
 router.use(express.json())
 router.use("/pokemons", pokemons)
 router.use("/types", type)
-
+router.get("/created", async(req, res) =>{
+    const dbPokemons = await Pokemon.findAll({
+             include: [{ model: Type, attributes: ["name"], through: { attributes: [] } }]
+         }) 
+     try {
+         
+         if(dbPokemons.length > 0){
+         res.send([...dbPokemons])}
+         else{
+         alert("No hay Pokemons creados")
+         res.send("No hay nda")
+             
+         }
+     } catch (error) {
+         res.send(error)
+         console.log(error)
+     }
+ })
 module.exports = router;

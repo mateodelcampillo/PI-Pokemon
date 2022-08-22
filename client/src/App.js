@@ -6,13 +6,14 @@ import PokemonDetail from './components/PokemonDetail/PokemonDetail';
 import CreatePokemon from './components/CreatePokemon/CreatePokemon';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getAllPokemons, getAllTypes } from './redux/actions';
+import { getAllPokemons, getAllTypes, getCreatedPokemons } from './redux/actions';
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllPokemons())
     dispatch(getAllTypes())
+    dispatch(getCreatedPokemons())
   },[])
   return (
     <>

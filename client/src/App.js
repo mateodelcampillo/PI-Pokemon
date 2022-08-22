@@ -19,7 +19,7 @@ function App() {
     <Route exact path="/" component={Landing}/>
     <Route exact path="/home" component={Home}/>
     <Route exact path="/pokemon/:id" component={PokemonDetail}/>
-    <Route exact path="/pokemon/create" component={CreatePokemon}/>
+    <Route exact path="/pokemons/create" component={CreatePokemon}/>
     </>
   );
 }

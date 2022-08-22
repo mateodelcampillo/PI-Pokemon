@@ -20,14 +20,17 @@ export const getAllPokemons = () => {
 export const getPokemonDetail = (id) => {
     return async function(dispatch){
         try {
-            const response = await axios.get(`http://localhost:3001/pokemons/${id}`)
+            if(id == ""){
+               dispatch({type: GET_POKEMON_DETAIL, payload: ""})
+            }else
+            {const response = await axios.get(`http://localhost:3001/pokemons/${id}`)
             if(response?.data){
                 dispatch({type: GET_POKEMON_DETAIL, payload: response.data})
-            }
+            }}
         } catch (e) {
             alert(e)
             console.log(e)
-            dispatch({type: GET_POKEMON_DETAIL, payload: ""})
+            
         }
     }
 }

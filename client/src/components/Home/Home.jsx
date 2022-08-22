@@ -14,7 +14,7 @@ function Home() {
   // SEARCH FUNCTION
  const handleOnChange = (e)=> {
   e.preventDefault()
-  setSearchPoke(e.target.value)
+  setSearchPoke(e.target.value.toLowerCase())
 }
 const handleOnSubmit = (e)=> {
   e.preventDefault()
@@ -32,13 +32,14 @@ const handleOnSubmit = (e)=> {
         e.preventDefault()
         dispatch(getAllPokemons())
       }}>RESET</button>
+      <button><Link to="/pokemons/create">CREATE POKEMON</Link></button>
       <h1>POKEMONS</h1>
 
       {Object.keys(statePokemons).length > 0  && statePokemons?
         statePokemons?.map((e,index) =>
           <PokemonCard
-            key={index}
-            id= {e.id_Pokemon}
+          key={index}
+          id={e.id_Pokemon}
             name={e.name}
             image={e.image}
             types={e.types}

@@ -12,14 +12,14 @@ function PokemonDetail(props) {
   return (<>
   <a onClick={(e) => {
     e.preventDefault()
-    dispatch(getPokemonDetail())
+    dispatch(getPokemonDetail(""))
   }}>
   <Link to="/home">Home</Link></a>
     <div>PokemonDetail</div>
     {Object.keys(stateDetail).length > 0 ?
     <> 
     <h1>{stateDetail.name.toUpperCase()}</h1>
-    <h4>Type:</h4>{stateDetail.types?.map(d => <span key={props.id}> {d.name ? d.name.toUpperCase() : d.toUpperCase()}/ </span>)}<br></br>
+    <div><h4>Type:</h4>{stateDetail.types?.map(d => <span key={props.id}> {d.name ? d.name.toUpperCase() : d.toUpperCase()}/ </span>)}<br></br></div>
 
     <img src={stateDetail.image} alt={stateDetail.name}></img>
     </> 

@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from 'react-router-dom'
+import { createPokemon } from '../../redux/actions'
 
 function CreatePokemon() {
+  const dispatch = useDispatch()
   const stateTypes = useSelector(state => state.types)
   const [newPokemon, setNewPokemon] = useState({
     name: "",
@@ -32,9 +34,16 @@ function CreatePokemon() {
     setNewPokemon({...newPokemon,
     [e.target.name]: e.target.value})
   }
+  function handleOnSubmit(e){
+    
+      e.preventDefault()
+   dispatch(createPokemon(newPokemon))
+    
+    
+  }
   return (
     <div>CreatePokemon
-    <form>
+    <form onSubmit={handleOnSubmit}>
       <label>Name:</label>
       <input onChange={handleOnChange} name="name" type="text" />
       <label>Image:</label>

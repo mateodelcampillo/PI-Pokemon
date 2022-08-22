@@ -1,9 +1,10 @@
-import { GET_ALL_POKEMONS, GET_ALL_TYPES, GET_POKEMON_DETAIL, GET_SEARCH_POKEMON } from "../actions"
+import { CREATE_POKEMON, GET_ALL_POKEMONS, GET_ALL_TYPES, GET_POKEMON_DETAIL, GET_SEARCH_POKEMON } from "../actions"
 
 const initialState = {
     pokemons: [],
     pokemonDetail: {},
-    types: []
+    types: [],
+    pokemonsCreated: []
 }
 const rootReducer = (state = initialState, action) => {
     switch(
@@ -32,6 +33,12 @@ const rootReducer = (state = initialState, action) => {
             return{
                 ...state,
                 pokemons: [action.payload]
+            }
+        }
+        case CREATE_POKEMON:{
+            return{
+                ...state,
+                pokemonsCreated: [...state.pokemonsCreated, action.payload]
             }
         }
         default: {

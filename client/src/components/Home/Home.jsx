@@ -19,6 +19,7 @@ function Home() {
 const handleOnSubmit = (e)=> {
   e.preventDefault()
   dispatch(getSearchPokemon(searchPoke))
+  dispatch(getAllPokemons())
 }
  
 

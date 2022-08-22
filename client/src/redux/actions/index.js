@@ -3,6 +3,7 @@ export const GET_ALL_POKEMONS = "GET_ALL_POKEMONS"
 export const GET_POKEMON_DETAIL = "GET_POKEMON_DETAIL"
 export const GET_ALL_TYPES = "GET_ALL_TYPES"
 export const GET_SEARCH_POKEMON = "GET_SEARCH_POKEMON"
+export const CREATE_POKEMON = "CREATE_POKEMON"
 
 export const getAllPokemons = () => {
     return async function(dispatch){
@@ -57,6 +58,24 @@ export const getSearchPokemon = (name) =>{
                 dispatch({type: GET_SEARCH_POKEMON, payload: response.data})
             }
         } catch (e) {
+            alert(e)
+        }
+    }
+}
+
+export const createPokemon = (pokemon) => {
+    return function(dispatch){
+        try{
+            fetch(`http://localhost:3001/pokemons`,{
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                method: "post",
+                body: JSON.stringify(pokemon)
+            })
+            dispatch({type: CREATE_POKEMON, payload: pokemon})
+        }
+        catch(e){
             alert(e)
         }
     }

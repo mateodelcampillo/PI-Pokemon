@@ -4,6 +4,7 @@ export const GET_POKEMON_DETAIL = "GET_POKEMON_DETAIL"
 export const GET_ALL_TYPES = "GET_ALL_TYPES"
 export const GET_SEARCH_POKEMON = "GET_SEARCH_POKEMON"
 export const CREATE_POKEMON = "CREATE_POKEMON"
+export const FILTERED_POKEMONS = "FILTERED_POKEMONS"
 
 export const getAllPokemons = () => {
     return async function(dispatch){
@@ -123,4 +124,14 @@ export const getCreatedPokemons = () => {
             alert(e)
         }
     }
+}
+
+export const filteredPokemons = (pokemons) => {
+return function(dispatch){
+    try {
+        dispatch({type: FILTERED_POKEMONS, payload: pokemons})
+    } catch (e) {
+        alert(e)
+    }
+}
 }

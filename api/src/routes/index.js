@@ -23,8 +23,8 @@ router.get("/created", async(req, res) =>{
          if(dbPokemons.length > 0){
          res.send([...dbPokemons])}
          else{
-         alert("No hay Pokemons creados")
-         res.send("No hay nda")
+         
+         res.send("No hay nada")
              
          }
      } catch (error) {

@@ -6,7 +6,7 @@ import PokemonDetail from './components/PokemonDetail/PokemonDetail';
 import CreatePokemon from './components/CreatePokemon/CreatePokemon';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getAllPokemons, getAllTypes, getCreatedPokemons } from './redux/actions';
+import { filteredPokemons, getAllPokemons, getAllTypes, getCreatedPokemons } from './redux/actions';
 
 function App() {
   const dispatch = useDispatch();
@@ -14,7 +14,8 @@ function App() {
     dispatch(getAllPokemons())
     dispatch(getAllTypes())
     dispatch(getCreatedPokemons())
-  },[])
+    // dispatch(filteredPokemons())
+  },[] )
   return (
     <>
     <Route exact path="/" component={Landing}/>

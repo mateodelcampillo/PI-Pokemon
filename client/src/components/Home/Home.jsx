@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from 'react-router-dom'
-import { getAllPokemons, getSearchPokemon } from '../../redux/actions'
+import { filteredPokemons, getAllPokemons, getSearchPokemon } from '../../redux/actions'
 import PokemonCard from '../PokemonCard/PokemonCard'
 import PokemonDetail from '../PokemonDetail/PokemonDetail'
 
@@ -10,7 +10,7 @@ function Home() {
   const dispatch = useDispatch()
   const statePokemons = useSelector(state => state.pokemons)
   const [searchPoke, setSearchPoke] = useState([])
-
+  const [updates, setUpdates] = useState([])
   // SEARCH FUNCTION
  const handleOnChange = (e)=> {
   e.preventDefault()
@@ -21,7 +21,14 @@ const handleOnSubmit = (e)=> {
   dispatch(getSearchPokemon(searchPoke))
   dispatch(getAllPokemons())
 }
- 
+//  ABC FILTER
+function abcFilter(e){
+  if(e.target.value === "asc"){dispatch(filteredPokemons(e.target.value))
+  setUpdates(["A-Z FILTER"])}
+  else{dispatch(filteredPokemons(e.target.value))
+    setUpdates(["Z-A FILTER"])}
+  // setUpdates("Z-A FILTER")
+}
 
   return (
     <>
@@ -34,6 +41,11 @@ const handleOnSubmit = (e)=> {
         dispatch(getAllPokemons())
       }}>RESET</button>
       <button><Link to="/pokemons/create">CREATE POKEMON</Link></button>
+      <select name="abcFilter" onChange={abcFilter}>
+        <option>Orden Alfabatico</option>
+        <option value="asc">A-Z</option>
+        <option value="desc">Z-A</option>
+      </select>
       <h1>POKEMONS</h1>
 
       {Object.keys(statePokemons).length > 0  && statePokemons?

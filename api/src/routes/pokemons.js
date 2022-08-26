@@ -33,11 +33,12 @@ router.get("/", async (req, res) => {
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${req.query.name}`)
                 .then(d => d.json())
                 .then(p => {
+                 
                     return {
                         id_Pokemon: p.id,
                         name: p.name,
                         types: p.types.map(t => t.type.name),
-                        image: p.sprites.other["official-artwork"].front_default,
+                        image: p.sprites.other["dream_world"].front_default,
                         height: p.height,
                         weight: p.weight,
                         health: p.stats[0].base_stat,
@@ -73,7 +74,7 @@ router.get("/", async (req, res) => {
                 id_Pokemon: p.id,
                 name: p.name,
                 types: p.types.map(t => t.type.name),
-                image: p.sprites.other["official-artwork"].front_default,
+                image: p.sprites.other["dream_world"].front_default,
                 height: p.height,
                 weight: p.weight,
                 health: p.stats[0].base_stat,
@@ -109,9 +110,7 @@ router.get("/:id", async (req, res) => {
             }
         })
     try {
-        
-        
-            res.send(idDB)
+                res.send(idDB)
         }
         catch(e){
             res.send(e)
@@ -126,7 +125,7 @@ router.get("/:id", async (req, res) => {
                     id_Pokemon: p.id,
                     name: p.name,
                     types: p.types.map(t => t.type.name),
-                    image: p.sprites.other["official-artwork"].front_default,
+                    image: p.sprites.other["dream_world"].front_default,
                     height: p.height,
                     weight: p.weight,
                     health: p.stats[0].base_stat,

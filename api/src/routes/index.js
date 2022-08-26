@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const {Pokemon, Type} = require("../db")
+const { Pokemon, Type } = require("../db")
 
 
 // Importar todos los routers;
@@ -14,22 +14,23 @@ const type = require("./type")
 router.use(express.json())
 router.use("/pokemons", pokemons)
 router.use("/types", type)
-router.get("/created", async(req, res) =>{
+router.get("/created", async (req, res) => {
     const dbPokemons = await Pokemon.findAll({
-             include: [{ model: Type, attributes: ["name"], through: { attributes: [] } }]
-         }) 
-     try {
-         
-         if(dbPokemons.length > 0){
-         res.send([...dbPokemons])}
-         else{
-         
-         res.send("No hay nada")
-             
-         }
-     } catch (error) {
-         res.send(error)
-         console.log(error)
-     }
- })
+        include: [{ model: Type, attributes: ["name"], through: { attributes: [] } }]
+    })
+    try {
+
+        if (dbPokemons.length > 0) {
+            res.send([...dbPokemons])
+        }
+        else {
+
+            res.send("No hay nada")
+
+        }
+    } catch (error) {
+        res.send(error)
+        console.log(error)
+    }
+})
 module.exports = router;

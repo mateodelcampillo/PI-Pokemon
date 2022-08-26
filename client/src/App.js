@@ -15,13 +15,13 @@ function App() {
     dispatch(getAllTypes())
     dispatch(getCreatedPokemons())
     // dispatch(filteredPokemons())
-  },[] )
+  }, [])
   return (
     <>
-    <Route exact path="/" component={Landing}/>
-    <Route exact path="/home" component={Home}/>
-    <Route exact path="/pokemon/:id" component={PokemonDetail}/>
-    <Route exact path="/pokemons/create" component={CreatePokemon}/>
+      <Route exact path="/" component={Landing} />
+      <Route exact path="/home" component={Home} />
+      <Route exact path="/pokemon/:id" component={PokemonDetail} />
+      <Route exact path="/pokemons/create" component={CreatePokemon} />
     </>
   );
 }

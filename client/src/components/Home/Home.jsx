@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from 'react-router-dom'
-import { filteredPokemons, filteredTypePokemons, getAllPokemons, getSearchPokemon } from '../../redux/actions'
+import { filteredAttackPokemons, filteredPokemons, filteredTypePokemons, getAllPokemons, getSearchPokemon } from '../../redux/actions'
 import PokemonCard from '../PokemonCard/PokemonCard'
 import PokemonDetail from '../PokemonDetail/PokemonDetail'
 
@@ -14,7 +14,7 @@ function Home() {
   // LOCAL STATE
   const [searchPoke, setSearchPoke] = useState([])
   const [updates, setUpdates] = useState([])
-  const [copyPokemons, setCopyPokemons] = useState()
+  
   
 
  // SEARCH FUNCTION
@@ -29,7 +29,10 @@ function Home() {
   }
   //  ABC FILTER
   function abcFilter(e) {
-    if (e.target.value === "asc") {
+    if(e.target.value === "reset"){
+      dispatch(getAllPokemons())
+    }
+    else if (e.target.value === "asc") {
       dispatch(filteredPokemons(e.target.value))
       setUpdates(["A-Z FILTER"])
     }
@@ -41,8 +44,20 @@ function Home() {
   }
   // TYPE FILTER
   function typeFilter(e) {
+    if(e.target.value === "reset"){
+      dispatch(getAllPokemons())
+    }else
     dispatch(filteredTypePokemons(e.target.value))
-    setUpdates(["Z-A FILTER"])
+    setUpdates(["TYPE FILTER"])
+
+  }
+  // ATTACK FILTER
+  function attackFilter(e){
+    if(e.target.value === "reset"){
+      dispatch(getAllPokemons())
+    }else
+    dispatch(filteredAttackPokemons(e.target.value))
+    setUpdates(["ATTACK FILTER"])
 
   }
   return (
@@ -57,13 +72,19 @@ function Home() {
       }}>RESET</button>
       <button><Link to="/pokemons/create">CREATE POKEMON</Link></button>
       <select name="abcFilter" onChange={abcFilter}>
-        <option>Orden Alfabatico</option>
+        <option value="reset">Orden Alfabatico</option>
         <option value="asc">A-Z</option>
         <option value="desc">Z-A</option>
       </select>
       <select name="typeFilter" onChange={typeFilter}>
-        <option>Types:</option>
+        <option value="reset">Types:</option>
         {stateTypes?.map(t => <option value={t.name}>{t.name}</option>)}
+      </select>
+      <select name="attackFilter" onChange={attackFilter}>
+        <option value="reset">Attack Filter:</option>
+        <option value="moreAttack">+ Attack</option>
+        <option value="lessAttack">- Attack</option>
+      
       </select>
       <h1>POKEMONS</h1>
 

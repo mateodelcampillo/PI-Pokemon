@@ -6,6 +6,7 @@ export const GET_SEARCH_POKEMON = "GET_SEARCH_POKEMON"
 export const CREATE_POKEMON = "CREATE_POKEMON"
 export const FILTERED_POKEMONS = "FILTERED_POKEMONS"
 export const FILTERED_TYPE_POKEMONS = "FILTERED_TYPE_POKEMONS"
+export const FILTERED_ATTACK_POKEMONS = "FILTERED_ATTACK_POKEMONS"
 
 export const getAllPokemons = () => {
     return async function (dispatch) {
@@ -143,6 +144,16 @@ export const filteredTypePokemons = (pokemons) =>{
     return function(dispatch){
         try {
             dispatch({type: FILTERED_TYPE_POKEMONS ,  payload: pokemons})
+        } catch (e) {
+            alert(e)
+        }
+    }
+}
+
+export const filteredAttackPokemons = (pokemons) =>{
+    return function(dispatch){
+        try {
+            dispatch({type: FILTERED_ATTACK_POKEMONS ,  payload: pokemons})
         } catch (e) {
             alert(e)
         }

@@ -11,7 +11,23 @@ router.get("/", async (req, res) => {
     const dbPokemons = await Pokemon.findAll({
         include: [{ model: Type, attributes: ["name"], through: { attributes: [] } }]
     })
-    
+    const pokemonsDB = dbPokemons?.map(
+        p => {
+        
+            return {
+                id_Pokemon: p.id_Pokemon,
+                name: p.name,
+                types: p.types.map(p => p.name),   
+                image: p.image,
+                health: p.health,
+                attack: p.attack,
+                defense: p.defense,
+                speed: p.speed ,
+                height: p.height, 
+                weight: p.weight 
+            }
+        }
+    )
     if (req.query.name) {
         const searchDb = await Pokemon.findAll({
             where: {
@@ -85,7 +101,7 @@ router.get("/", async (req, res) => {
         })
         if (dbPokemons.length > 0) {
             try {
-                res.json([...dbPokemons, ...pokemons])
+                res.json([...pokemonsDB, ...pokemons])
             } catch (e) {
                 res.send(e)
             }

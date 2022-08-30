@@ -17,6 +17,7 @@ function CreatePokemon() {
   health: 0,
   image: ""
   })
+  const [errorUsername, setErrorUsername] = useState("")
   function handleOnChange(e){
     if(e.target.name === "types"){
       if(e.target.checked){
@@ -40,6 +41,19 @@ function CreatePokemon() {
    dispatch(createPokemon(newPokemon))
     
     
+  }let errors= {}
+  function handleVerification(e){
+    
+    if(e.target.name === "name"){
+      function number(value){
+        return /\d/.test(value)
+      }
+      if(number(e.target.value)){
+       setErrorUsername("Nooooooo")
+      }else{
+        setErrorUsername("")
+      }
+    }
   }
   return (
     <div>CreatePokemon
@@ -50,27 +64,29 @@ function CreatePokemon() {
       }}><Link to="/home">Home</Link></a>
     <form onSubmit={handleOnSubmit}>
       <label>Name:</label>
-      <input onChange={handleOnChange} name="name" type="text" />
+      <input onChange={(e)=> {handleOnChange(e); handleVerification(e)}} name="name" type="text" />
+      <span>{errorUsername ? errorUsername : ""}</span>
+      <br></br>
       <label>Image:</label>
-      <input name="image" onChange={handleOnChange} type="text" />
+      <input name="image" onChange={handleOnChange} type="text" /><br></br>
       <label>Types:</label>
-      {stateTypes?.map((t,index) =>  <label name="types" key={index}><input onChange={handleOnChange} type="checkbox" name='types' value={t.name} />{t.name}</label>)}
+      {stateTypes?.map((t,index) =>  <label name="types" key={index}><input onChange={handleOnChange} type="checkbox" name='types' value={t.name} />{t.name}</label>)}<br></br>
       <label>Health:</label>
-      <input name="health" onChange={handleOnChange} type="number" />
+      <input name="health" onChange={handleOnChange} type="number" /><br></br>
       <label>Attack:</label>
-      <input name="attack" onChange={handleOnChange} type="number" />
+      <input name="attack" onChange={handleOnChange} type="number" /><br></br>
 
       <label>Defense:</label>
-      <input name="defense" onChange={handleOnChange} type="number" />
+      <input name="defense" onChange={handleOnChange} type="number" /><br></br>
 
       <label>Speed:</label>
-      <input name="speed" onChange={handleOnChange} type="number" />
+      <input name="speed" onChange={handleOnChange} type="number" /><br></br>
 
       <label>Height:</label>
-      <input name="height" onChange={handleOnChange} type="number" />
+      <input name="height" onChange={handleOnChange} type="number" /><br></br>
 
       <label>Weight:</label>
-      <input name="weight" onChange={handleOnChange} type="number" />
+      <input name="weight" onChange={handleOnChange} type="number" /><br></br>
 
       <button>Create!</button>
       
